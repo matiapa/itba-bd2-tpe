@@ -4,17 +4,21 @@ from neo4j import GraphDatabase
 from elasticsearch import Elasticsearch, helpers
 import csv
 import io
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-NEO4J_URL = 'neo4j://localhost:7687'
-NEO4J_USER = 'neo4j'
-NEO4J_PASS = '1234'
-NEO4J_DB_NAME = "neo4j"
+NEO4J_URL = os.getenv('NEO4J_URL')
+NEO4J_USER = os.getenv('NEO4J_USER')
+NEO4J_PASS = os.getenv('NEO4J_PASS')
+NEO4J_DB_NAME = os.getenv('NEO4J_DB_NAME')
 
-ELASTIC_HOST = 'localhost'
-ELASTIC_PORT = 9200
-ELASTIC_INDEX_NAME = 'docs'
+ELASTIC_HOST = os.getenv('ELASTIC_HOST')
+ELASTIC_PORT = os.getenv('ELASTIC_PORT')
+ELASTIC_INDEX_NAME = os.getenv('ELASTIC_INDEX_NAME')
 
 STOP_WORDS = ['and','or','a','of']
 LABEL_LIMIT = 10
