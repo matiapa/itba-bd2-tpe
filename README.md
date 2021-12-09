@@ -6,19 +6,16 @@ A brief description of what this project does and who it's for
 # Neo4j SetUp
 
 ### Neo4j Installation (skip this step if you already have a working instance)
-```bash
-docker pull neo4j
-docker run --name Myneo4j -p 7474:7474 -p 7687:7687--env=NEO4J_AUTH=none -d neo4j
-```
-Other useful commands
-```bash
-docker start Myneo4j
-docker stop Myneo4j
-docker ps
-```
-You can access the comand console at http://localhost:7474/browser/
-(replace the 7474 with your port number depending on installation)
 
+follow the instructions from the link below
+
+https://neo4j.com/download/
+
+Install also the following Plugins:
+
+APOC
+
+Neosemantics
 
 ### Create Constraint
 ```bash
