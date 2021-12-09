@@ -63,7 +63,21 @@ CALL n10s.rdf.import.fetch(
 YIELD terminationStatus, triplesLoaded, triplesParsed
 RETURN terminationStatus, triplesLoaded, triplesParsed
 ```
-#
+
+# ElasticSearch SetUp
+
+### ElasticSearch Installation (skip this step if you already have a working instance)
+```bash
+docker pull elasticsearch:7.14.1
+docker run --name Myelastic -p 9200:9200 -p 9300:9300 -e"discovery.type=single-node" elasticsearch:7.14.1
+```
+Other useful commands
+```bash
+docker start Myelastic
+docker stop Myelastic
+docker ps
+```
+
 
 # Flask SetUp
 Linux install of pip and flask
