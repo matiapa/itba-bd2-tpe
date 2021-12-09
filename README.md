@@ -1,7 +1,11 @@
 # Searchtastic
 
-A brief description of what this project does and who it's for
+Searchtastic is a Polyglot Database Solution that combines the power of graph based data structures along with search efficient indexing to search for conseptual relationships in your datasets. Powered by both Neo4j and Elasticsearch, this database is incredibly Flexible. By simply editing the information stored in the Neo4j instance, the conceptual search engine can be tailored to suit any organization's needs.
 
+
+# Documentation
+
+You may find the API specification in docs/api.yaml
 
 # Neo4j SetUp
 
@@ -79,7 +83,14 @@ docker start Myelastic
 docker stop Myelastic
 docker ps
 ```
+# Configure Enviroment
 
+Copy and Rename the .env-template file
+
+```bash
+cp .env-template .env
+```
+And fill all information fields in the newly created file to configure the Database
 
 # Flask SetUp
 Linux install of pip and flask
@@ -96,3 +107,6 @@ Once installed, run the following commands
 pip install -r requirements.txt
 flask run
 ```
+# Frontend SetUp
+
+Instructions to start up  a visual interface can be found in /webapp/README.md
