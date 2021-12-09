@@ -90,6 +90,8 @@ sudo apt install python3-flask
 ```
 Once installed, run the following commands
 
+(Warning: both database instances must be running for the following commands to take effect properly)
+
 ```bash
 pip install -r requirements.txt
 flask run
