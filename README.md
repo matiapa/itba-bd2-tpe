@@ -1,5 +1,4 @@
 # Flask SetUp
-pip is required for the use of flask 
 Linux install of pip and flask
 
 ```bash
