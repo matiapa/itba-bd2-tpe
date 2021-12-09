@@ -1,18 +1,24 @@
-# Flask SetUp
-Linux install of pip and flask
+# Searchtastic
 
-```bash
-sudo apt install python3-pip
-sudo apt install python3-flask
-```
-Once installed, run the following commands
+A brief description of what this project does and who it's for
 
-```bash
-pip install -r requirements.txt
-flask run
-```
 
 # Neo4j SetUp
+
+### Neo4j Installation (skip this step if you already have a working instance)
+```bash
+docker pull neo4j
+docker run --name Myneo4j -p 7474:7474 -p 7687:7687--env=NEO4J_AUTH=none -d neo4j
+```
+Other useful commands
+```bash
+docker start Myneo4j
+docker stop Myneo4j
+docker ps
+```
+You can access the comand console at http://localhost:7474/browser/
+(replace the 7474 with your port number depending on installation)
+
 
 ### Create Constraint
 ```bash
@@ -56,4 +62,19 @@ CALL n10s.rdf.import.fetch(
 )
 YIELD terminationStatus, triplesLoaded, triplesParsed
 RETURN terminationStatus, triplesLoaded, triplesParsed
+```
+
+
+### Flask SetUp
+Linux install of pip and flask
+
+```bash
+sudo apt install python3-pip
+sudo apt install python3-flask
+```
+Once installed, run the following commands
+
+```bash
+pip install -r requirements.txt
+flask run
 ```
