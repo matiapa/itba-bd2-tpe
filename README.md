@@ -7,15 +7,20 @@ A brief description of what this project does and who it's for
 
 ### Neo4j Installation (skip this step if you already have a working instance)
 
-follow the instructions from the link below
+Follow the instructions from the link below to get the Desktop Version
 
 https://neo4j.com/download/
 
 Install also the following Plugins:
 
-APOC
+-APOC
 
-Neosemantics
+-Neosemantics
+
+You can access the control panel here:
+http://localhost:7474/browser/
+
+(Replace 7474 with whatever port your Database is listening on)
 
 ### Create Constraint
 ```bash
