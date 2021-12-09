@@ -1,4 +1,12 @@
 # Flask SetUp
+pip is required for the use of flask 
+Linux install of pip and flask
+
+```bash
+sudo apt install python3-pip
+sudo apt install python3-flask
+```
+Once installed, run the following commands
 
 ```bash
 pip install -r requirements.txt
