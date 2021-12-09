@@ -44,6 +44,7 @@ CALL n10s.graphconfig.init({
 
 The following script will read RDF data from the WikiData dump and load it into Neo4J
 
+### Import Neo4j Data
 ```bash
 WITH 'PREFIX neo: <neo4j://voc#>
 CONSTRUCT { 
