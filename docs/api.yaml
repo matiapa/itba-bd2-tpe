@@ -1,0 +1,98 @@
+openapi: '3.0.0'
+
+info:
+  version: '1.0.0'
+  title: 'Searchtastic API'
+
+servers:
+  - url: 'http://localhost:5000/api'
+
+paths:
+  /search:
+    get:
+      tags:
+        - 'Search'
+      summary: 'Búsqueda por término'
+      operationId: 'searchDocs'
+      parameters:
+        - in: 'query'
+          name: 'query'
+          description: 'Palabras base a utilizar'
+          schema:
+            type: 'string'
+          required: true
+        - in: 'query'
+          name: 'depth'
+          description: 'Máxima profundidad de las relaciones a utilizar'
+          schema:
+            type: 'integer'
+        - in: 'query'
+          name: 'useClassOff'
+          description: 'Incluir instancias usando la relación class_of'
+          schema:
+            type: 'boolean'
+        - in: 'query'
+          name: 'useParentOff'
+          description: 'Incluir subclases usando la relación parent_of'
+          schema:
+            type: 'boolean'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryResult'
+        '400':
+          description: 'Missing query parameter | At least one relationship must be used'
+
+  /data:
+    post:
+      tags:
+        - 'Upload'
+      summary: 'Subir una colección de documentos'
+      operationId: 'uploadDocs'
+      
+      requestBody:
+        content: 
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'Archivo en formato CSV con los documentos'
+                id_field:
+                  type: 'string'
+                  description: 'Campo del CSV a usar como ID del documento'
+                body_field:
+                  type: 'string'
+                  description: 'Campo del CSV a usar como body del documento'
+            encoding:
+              file:
+                contentType: text/csv
+      responses:
+        '201':
+          description: 'Succesfully uploaded'
+        '400':
+          description: 'Invalid body or id | Body and id cannot be equal'
+        '415':
+          description: 'Invalid file extension'
+          
+components:
+  schemas:
+    QueryResult:
+      type: 'object'
+      properties:
+        id:
+          type: 'integer'
+          format: 'int64'
+        description:
+          type: 'string'
+        labels:
+          type: 'array'
+          items:
+            type: 'string'

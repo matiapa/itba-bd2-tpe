@@ -116,7 +116,7 @@ def load_data():
         body_field = 'body'
     # validate file extension is csv
     if file.filename.split('.')[-1] != 'csv':
-        return "Invalid file extension", 400
+        return "Invalid file extension", 415
 
     # rename csv header to id_field and body_field
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
@@ -125,10 +125,10 @@ def load_data():
 
     # check that header contains id_field and body_field
     if id_field not in header or body_field not in header:
-        return "Invalid header", 400
+        return "Invalid body or id", 400
     # check that id_field and body_field are not the same
     if id_field == body_field:
-        return "Headers can't be equal", 400
+        return "Body and id cannot be equal", 400
     
     # rename id_field header to 'id'
     header[header.index(id_field)] = 'id'
@@ -138,7 +138,7 @@ def load_data():
     # load data to elasticsearch
     helpers.bulk(es, reader, index=ELASTIC_INDEX_NAME)
     
-    return "Succesfully Uploaded", 201
+    return "Succesfully uploaded", 201
 
 
 @app.route('/js/<path:path>')
