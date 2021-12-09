@@ -27,12 +27,12 @@ paths:
           schema:
             type: 'integer'
         - in: 'query'
-          name: 'useClassOff'
+          name: 'useClassOf'
           description: 'Incluir instancias usando la relación class_of'
           schema:
             type: 'boolean'
         - in: 'query'
-          name: 'useParentOff'
+          name: 'useParentOf'
           description: 'Incluir subclases usando la relación parent_of'
           schema:
             type: 'boolean'

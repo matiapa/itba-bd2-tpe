@@ -1,4 +1,3 @@
-import re
 from flask import Flask, request, send_from_directory
 from neo4j import GraphDatabase
 from elasticsearch import Elasticsearch, helpers
@@ -21,7 +20,7 @@ ELASTIC_PORT = os.getenv('ELASTIC_PORT')
 ELASTIC_INDEX_NAME = os.getenv('ELASTIC_INDEX_NAME')
 
 STOP_WORDS = ['and','or','a','of']
-LABEL_LIMIT = 10
+LABEL_LIMIT = 20
 
 neo = GraphDatabase.driver(NEO4J_URL, auth=(NEO4J_USER, NEO4J_PASS))
 es = Elasticsearch(host = ELASTIC_HOST, port = ELASTIC_PORT)
@@ -31,6 +30,7 @@ def search():
     depth = int(request.args.get('depth') or '1')
     useClassOf = bool(int(request.args.get('useClassOf') or '1'))
     useParentOf = bool(int(request.args.get('useParentOf') or '1'))
+    useFuzzy = bool(int(request.args.get('useFuzzy') or '1'))
     searchStr = request.args.get('query')
 
     if not useClassOf and not useParentOf:
@@ -45,15 +45,27 @@ def search():
     words = list(filter(lambda l : l not in STOP_WORDS, words))
     labels = words + [searchStr]
 
-    print(f'> Labels from query string: {labels}')
+    # Print search config
+
+    print(f'\n> Looking for subclasses: {useParentOf}')
+    print(f'\n> Looking for instances: {useClassOf}')
+    print(f'\n> Max depth of relations: {depth}')
 
     session = neo.session(database = NEO4J_DB_NAME)
     relatedLabels = session.write_transaction(getRelatedLabels, labels, depth, useClassOf, useParentOf)
 
+    relatedLabels += labels
+    relatedLabels = list(set(relatedLabels))
+
     if len(relatedLabels) > LABEL_LIMIT:
         relatedLabels = relatedLabels[0:LABEL_LIMIT]
 
-    print(f'> Related labels: {relatedLabels}')
+    # Print related labels
+
+    print(f'\n> Will search for:')
+    for label in relatedLabels:
+        print(f'>> {label}')
+    print('\n')
 
     # Search document collection
 
@@ -61,11 +73,18 @@ def search():
 
     for label in relatedLabels:
 
-        response = es.search(index=ELASTIC_INDEX_NAME, query={
-            "fuzzy": {
-                "description": {"value": label}
-            }
-        })
+        if useFuzzy:
+            response = es.search(index=ELASTIC_INDEX_NAME, query={
+                "fuzzy": {
+                    "description": {"value": label}
+                }
+            })
+        else:
+            response = es.search(index=ELASTIC_INDEX_NAME, query={
+                "terms": {
+                    "description": [label]
+                }
+            })
 
         for doc in response['hits']['hits']:
             _id = doc['_id']

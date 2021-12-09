@@ -5,7 +5,8 @@ Searchtastic is a Polyglot Database Solution that combines the power of graph ba
 
 # Documentation
 
-You may find the API specification in docs/api.yaml
+You may find the API specification in docs/api.yaml, it's on the OpenAPI 3.0 format and can be visualized
+with many online free tools.
 
 # Neo4j SetUp
 
@@ -40,6 +41,9 @@ CALL n10s.graphconfig.init({
 ```
 
 ### Import Data
+
+The following script will read RDF data from the WikiData dump and load it into Neo4J
+
 ```bash
 WITH 'PREFIX neo: <neo4j://voc#>
 CONSTRUCT { 
@@ -93,20 +97,59 @@ cp .env-template .env
 And fill all information fields in the newly created file to configure the Database
 
 # Flask SetUp
-Linux install of pip and flask
+Linux install of pip and requirements
 
 ```bash
 sudo apt install python3-pip
-sudo apt install python3-flask
+pip install -r requirements.txt
 ```
 Once installed, run the following commands
 
 (Warning: both database instances must be running for the following commands to take effect properly)
 
 ```bash
-pip install -r requirements.txt
 flask run
 ```
 # Frontend SetUp
+## Project setup
 
-Instructions to start up  a visual interface can be found in /webapp/README.md
+Install Vue and Vue CLI from https://vue.js
+
+On the webapp/ folder run the following commands
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+NOTE: The production build will be generated on the webapp/dist folder and is served
+statically by the Flask server
+
+# Examples of API use
+
+## Search for technology
+
+The following request will search for the term 'technology' using the relations 'useClassOf' and 'useParentOf'
+with a maximum relation depth of 1.
+
+```
+curl --location --request GET 'http://localhost:5000/api/search?query=technology&depth=1&useClassOf=1&useParentOf=1'
+```
+
+## Search for organisms
+
+The following request will search for the term 'organisms' using the relations 'useClassOf' and 'useParentOf'
+with a maximum relation depth of 2.
+
+```
+curl --location --request GET 'http://localhost:5000/api/search?query=technology&depth=2&useClassOf=1&useParentOf=1'
+```
