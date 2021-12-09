@@ -39,7 +39,7 @@ CALL n10s.graphconfig.init({
 })
 ```
 
-### Import Data
+### Import Neo4j Data
 ```bash
 WITH 'PREFIX neo: <neo4j://voc#>
 CONSTRUCT { 
