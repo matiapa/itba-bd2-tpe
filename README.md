@@ -1,6 +1,6 @@
 # Searchtastic
 
-Searchtastic is a Polyglot Database Solution that combines the power of graph based data structures along with search efficient indexing to search for conseptual relationships in your datasets. Powered by both Neo4j and Elasticsearch, this database is incredibly Flexible. By simply editing the information stored in the Neo4j instance, the conceptual search engine can be tailored to suit any organization's needs.
+Searchtastic is a Polyglot Database Solution that combines the power of graph based data structures along with search efficient indexing to search for conceptual relationships in your datasets. Powered by both Neo4j and Elasticsearch, this database is incredibly Flexible. By simply editing the information stored in the Neo4j instance, the conceptual search engine can be tailored to suit any organization's needs.
 
 
 # Documentation
@@ -87,7 +87,7 @@ docker start Myelastic
 docker stop Myelastic
 docker ps
 ```
-# Configure Enviroment
+# Configure Environment
 
 Copy and Rename the .env-template file
 
